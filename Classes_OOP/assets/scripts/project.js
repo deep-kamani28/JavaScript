@@ -69,9 +69,7 @@ class ProductList {
   }
 }
 
-class Shop{
-    
-}
+
 
 const showProduct=new ProductList();
 showProduct.render();
