@@ -71,5 +71,5 @@ class ProductList {
 
 
 
-// const showProduct=new ProductList();
-// showProduct.render();
+const showProduct=new ProductList();
+showProduct.render();
