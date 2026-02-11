@@ -22,7 +22,11 @@ class ElementAttribute {
 class Component {
   constructor(renderHookId) {
     this.hookId = renderHookId;
+    this.render();
   }
+
+  render(){};
+
   createRootElements(tag, cssClasses, attributes) {
     const rootElement = document.createElement(tag);
     if (cssClasses) {
@@ -125,20 +129,19 @@ class ProductList extends Component {
       new ElementAttribute("id", "prod-list"),
     ]);
     for (const prod of this.products) {
-      const productItem = new ProductItem(prod, "prod-list");
-      productItem.render();
+      new ProductItem(prod, "prod-list");
     }
   }
 }
 
-class Shop {
+class Shop extends Component{
+  constructor(){
+    super();
+  }
+  
   render() {
-    const renderHook = document.getElementById("app");
     this.cart = new ShoppingCart("app");
-    const cartEl = this.cart.render();
-    const productList = new ProductList('app');
-    const prodListEl = productList.render();
-    renderHook.append(prodListEl);
+    new ProductList('app');
   }
 }
 
@@ -146,7 +149,6 @@ class App {
   static cart;
   static init() {
     const shop = new Shop();
-    shop.render();
     this.cart = shop.cart;
   }
 
