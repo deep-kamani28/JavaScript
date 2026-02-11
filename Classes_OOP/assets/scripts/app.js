@@ -115,14 +115,15 @@ class ProductItem extends Component {
 }
 
 class ProductList extends Component {
-  products=[];
+  #products=[];
   constructor(renderHookId){
-    super(renderHookId);
+    super(renderHookId,false);
+    this.render();
     this.fetchProduct();
   }
 
   fetchProduct(){
-    this.products = [
+    this.#products = [
       new Product(
         "Pillow",
         "https://www.sleepspa.in/product/sleep-spa-comfort-therapy-fibre-pillow/",
@@ -140,7 +141,7 @@ class ProductList extends Component {
   }
 
   renderProducts(){
-    for (const prod of this.products) {
+    for (const prod of this.#products) {
       new ProductItem(prod, "prod-list");
     }
   }
@@ -149,7 +150,7 @@ class ProductList extends Component {
     const prodList = this.createRootElements("ul", "product-list", [
       new ElementAttribute("id", "prod-list"),
     ]);
-    if(this.products && this.products.length>0){
+    if(this.#products && this.#products.length>0){
       this.renderProducts();
     }
   }
