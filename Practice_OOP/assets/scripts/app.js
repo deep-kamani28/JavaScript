@@ -1,0 +1,84 @@
+class DOMHelper{
+    static moveElement(elementId,newDestinationSelector){
+        const element=document.getElementById(elementId);
+        const destinationElement=document.querySelector(newDestinationSelector);
+        destinationElement.append(element);
+    }
+
+    static clearEventListener(element){
+        const clonedElement=element.cloneNode(true);
+        element.replaceWith(clonedElement);
+        return clonedElement;
+    }
+}
+
+class Tooltip {}
+
+class ProjectItem {
+  constructor(id,updateProjectListFunction,type) {
+    this.id = id;
+    this.updateProjectListHandler=updateProjectListFunction;
+    this.connectMoreInfoButton();
+    this.connectSwitchButton(type);
+  }
+
+  connectMoreInfoButton() {}
+
+  connectSwitchButton(type) {
+    const projectItemElement = document.getElementById(this.id);
+    let switchBtn = projectItemElement.querySelector("button:last-of-type");
+    switchBtn=DOMHelper.clearEventListener(switchBtn);
+    switchBtn.textContent=type==='active' ? 'finished':'active';
+    switchBtn.addEventListener('click',this.updateProjectListHandler.bind(null,this.id));
+  }
+
+  update(updateProjectFn,type){
+    this.updateProjectListHandler=updateProjectFn;
+    this.connectSwitchButton(type);
+  }
+}
+
+class ProjectList {
+  projects = [];
+  constructor(type) {
+    this.type=type;
+    const prjItems = document.querySelectorAll(`#${type}-projects li`);
+    for (const prjItem of prjItems) {
+      this.projects.push(new ProjectItem(prjItem.id,this.switchProject.bind(this),this.type));
+    }
+    console.log(this.projects);
+  }
+
+  setSwitchHandlerFunction(switchHandlerFunction) {
+    this.switchHandler = switchHandlerFunction;
+  }
+
+  addProject(project) {
+    // console.log(project);
+    this.projects.push(project);
+    DOMHelper.moveElement(project.id,`#${this.type}-projects ul`);
+    project.update(this.switchProject.bind(this),this.type);
+  }
+
+  switchProject(projectId) {
+    this.switchHandler(this.projects.find((p) => p.id === projectId));
+    this.projects = this.projects.filter(p=>p.id!==projectId);
+  }
+}
+
+class App {
+  static init() {
+    const activeProjectList = new ProjectList("active");
+    const finishedProjectList = new ProjectList("finished");
+
+    activeProjectList.setSwitchHandlerFunction(
+      finishedProjectList.addProject.bind(finishedProjectList),
+    );
+
+    finishedProjectList.setSwitchHandlerFunction(
+      activeProjectList.addProject.bind(activeProjectList),
+    );
+  }
+}
+
+App.init();
