@@ -120,7 +120,6 @@ class ProjectList {
     for (const prjItem of prjItems) {
       this.projects.push(new ProjectItem(prjItem.id,this.switchProject.bind(this),this.type));
     }
-    console.log(this.projects);
   }
 
   setSwitchHandlerFunction(switchHandlerFunction) {
