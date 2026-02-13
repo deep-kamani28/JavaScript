@@ -30,3 +30,17 @@ button.addEventListener('click',(event)=>{
     console.log("BUTTON CLICKED");
     console.log(event);
 });
+
+const listItem=document.querySelectorAll('li');
+
+const list=document.querySelector('ul');
+
+// listItem.forEach(listItem=>{
+//     listItem.addEventListener('click',(event)=>{
+//         event.target.classList.toggle('highlight');
+//     });
+// });
+
+list.addEventListener('click',(event)=>{
+    event.target.closest('li').classList.toggle('highlight');
+});
