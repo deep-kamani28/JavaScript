@@ -78,6 +78,7 @@ class ProjectItem {
     this.updateProjectListHandler=updateProjectListFunction;
     this.connectMoreInfoButton();
     this.connectSwitchButton(type);
+    this.connectDrag();
   }
 
   showMoreInfoHandler(){
@@ -90,6 +91,13 @@ class ProjectItem {
     const tooltip=new Tooltip(()=>{this.hasActiveTooltip=false;}, tooltipText, this.id);
     tooltip.show();
     this.hasActiveTooltip=true;
+  }
+
+  connectDrag(){
+    document.getElementById(this.id).addEventListener('dragstart',event=>{
+      event.dataTransfer.setData('plain/text',this.id);
+      event.dataTransfer.effectAllowed='move';
+    });
   }
 
   connectMoreInfoButton() {
@@ -152,10 +160,10 @@ class App {
       activeProjectList.addProject.bind(activeProjectList),
     );
 
-    const timerId=setTimeout(this.startAnalytics,3000);
-    document.getElementById('stop-analytics-btn').addEventListener('click',()=>{
-      clearTimeout(timerId);
-    });
+    // const timerId=setTimeout(this.startAnalytics,3000);
+    // document.getElementById('stop-analytics-btn').addEventListener('click',()=>{
+    //   clearTimeout(timerId);
+    // });
   }
 
   static startAnalytics(){
