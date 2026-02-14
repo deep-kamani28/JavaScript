@@ -3,11 +3,14 @@ const output = document.querySelector('p');
 
 function trackUserHandler() {
   navigator.geolocation.getCurrentPosition(posData=>{
-    console.log(posData)
+    setTimeout(()=>{
+      console.log(posData);
+    },2000)
   }, error=>{
     console.log(error)
   });
-  console.log('Gettig Posotion...');
+  setTimeout(()=>{console.log('Timer done!!');})
+  console.log('Getting Position...');
 }
 
 button.addEventListener('click', trackUserHandler);
