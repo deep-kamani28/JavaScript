@@ -14,6 +14,7 @@ function sendHttpRequest(method,url){
             // const listOfPost=JSON.parse(xhr.response);
             
         }
+        xhr.send();
     });
     return promise;
 }
@@ -21,14 +22,14 @@ function sendHttpRequest(method,url){
 function fetchPost(){
     sendHttpRequest('GET','https://jsonplaceholder.typicode.com/posts').then(
         responseData=>{
-            const listOfPost=xhr.response;
+            const listOfPost=responseData;
             for(const post of listOfPost){
                 const postEl=document.importNode(postTemplate.content,true);
                 postEl.querySelector('h2').textContent=post.title.toUpperCase();
                 postEl.querySelector('p').textContent=post.body;
                 listElement.append(postEl);
             }
-            xhr.send();
+            
         }
     );
 }
