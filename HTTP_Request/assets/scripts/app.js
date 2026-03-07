@@ -42,54 +42,54 @@ const form=document.querySelector('#new-post form');
 const fetchButton=document.querySelector('#available-posts button');
 const postList=document.querySelector('ul');
 
-function sendHttpRequest(method,url,data){
-    // const promise=new Promise((resolve,reject)=>{
+// function sendHttpRequest(method,url,data){
+//     // const promise=new Promise((resolve,reject)=>{
 
-    //     const xhr=new XMLHttpRequest();
+//     //     const xhr=new XMLHttpRequest();
 
-    //     xhr.setRequestHeader('Content-Type','application/json');
+//     //     xhr.setRequestHeader('Content-Type','application/json');
 
-    //     xhr.open(method,url);
+//     //     xhr.open(method,url);
 
-    //     xhr.responseType='json';
+//     //     xhr.responseType='json';
 
-    //     xhr.onload=function (){
-    //         if(xhr.status >= 200 && xhr.status<300){
-    //             resolve(xhr.response);
-    //         }else{
-    //             reject(new Error('Something went wrong !'));
-    //         }
-    //     }
+//     //     xhr.onload=function (){
+//     //         if(xhr.status >= 200 && xhr.status<300){
+//     //             resolve(xhr.response);
+//     //         }else{
+//     //             reject(new Error('Something went wrong !'));
+//     //         }
+//     //     }
 
-    //     xhr.onerror=function(){
-    //         reject(new Error('Failed to send request'));
-    //     }
-    //     xhr.send(JSON.stringify(data));
-    // });
-    // return promise;
+//     //     xhr.onerror=function(){
+//     //         reject(new Error('Failed to send request'));
+//     //     }
+//     //     xhr.send(JSON.stringify(data));
+//     // });
+//     // return promise;
 
-    return fetch(url,{
-        method:method,
-        body:JSON.stringify(data),
-        headers:{
-            'Content-Type':'application/json'
-        }
-    }).then(response=>{
-        if(response.status>=200 && response.status<300){
-            return response.json();
-        }else{
-            throw new Error('Somthing went wrong - server-side.');
-        }
-    }).catch(error=>{
-        console.log(error);
-        throw new Error('Somthing went wrong!');
-    });
-}
+//     return fetch(url,{
+//         method:method,
+//         body:JSON.stringify(data),
+//         headers:{
+//             'Content-Type':'application/json'
+//         }
+//     }).then(response=>{
+//         if(response.status>=200 && response.status<300){
+//             return response.json();
+//         }else{
+//             throw new Error('Somthing went wrong - server-side.');
+//         }
+//     }).catch(error=>{
+//         console.log(error);
+//         throw new Error('Somthing went wrong!');
+//     });
+// }
 
 async function fetchPost(){
     try{
-        const responseData=await sendHttpRequest('GET','https://jsonplaceholder.typicode.com/posts');
-        const listOfPost=responseData;
+        const response=await axios.get('https://jsonplaceholder.typicode.com/posts');
+        const listOfPost=response.data;
         for(const post of listOfPost){
             const postEl=document.importNode(postTemplate.content,true);
             postEl.querySelector('h2').textContent=post.title.toUpperCase();
@@ -110,8 +110,8 @@ async function createPost(title,content) {
         body:content,
         userId:UserId
     };
-    sendHttpRequest('POST','https://jsonplaceholder.typicode.com/posts',post);
-    fetchPost();
+    const response=await axios.post('https://jsonplaceholder.typicode.com/posts',post);
+    console.log(response);
 }
 
 fetchButton.addEventListener('click',fetchPost);
@@ -126,6 +126,6 @@ form.addEventListener('submit',event=>{
 postList.addEventListener('click', event=>{
     if(event.target.tagName==='BUTTON'){
         const postId=event.target.closest('li').id;
-        sendHttpRequest('DELETE',`https://jsonplaceholder.typicode.com/posts/${postId}`)
+        axios.delete(`https://jsonplaceholder.typicode.com/posts/${postId}`)
     }
 })
