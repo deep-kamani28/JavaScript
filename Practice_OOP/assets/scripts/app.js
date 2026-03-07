@@ -1,4 +1,5 @@
-import {ProjectList} from './App/ProjectList.js'
+import {ProjectList} from './App/ProjectList.js';
+import * as A from '../scripts/Utility/Analytics.js';
 
 globalThis.Max_Value='MAX';
 
@@ -15,18 +16,17 @@ class App {
       activeProjectList.addProject.bind(activeProjectList),
     );
 
-    // const timerId=setTimeout(this.startAnalytics,3000);
-    // document.getElementById('stop-analytics-btn').addEventListener('click',()=>{
-    //   clearTimeout(timerId);
-    // });
+    document.getElementById('stop-analytics-btn').addEventListener('click',()=>{
+      clearInterval(A.intervalId);
+    });
   }
 
-  static startAnalytics(){
-    const analyticsScript=document.createElement('script');
-    analyticsScript.src='assets/scripts/Utility/Analytics.js';
-    analyticsScript.defer=true;
-    document.head.append(analyticsScript);
-  }
+  // static startAnalytics(){
+  //   const analyticsScript=document.createElement('script');
+  //   analyticsScript.src='assets/scripts/Utility/Analytics.js';
+  //   analyticsScript.defer=true;
+  //   document.head.append(analyticsScript);
+  // }
 }
 
 App.init();
