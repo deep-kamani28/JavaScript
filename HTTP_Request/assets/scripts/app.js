@@ -75,13 +75,20 @@ function sendHttpRequest(method,url,data){
             'Content-Type':'application/json'
         }
     }).then(response=>{
-        return response.json();
+        if(response.status>=200 && response.status<300){
+            return response.json();
+        }else{
+            throw new Error('Somthing went wrong - server-side.');
+        }
+    }).catch(error=>{
+        console.log(error);
+        throw new Error('Somthing went wrong!');
     });
 }
 
 async function fetchPost(){
-    // try{
-        const responseData=await sendHttpRequest('GET','https://jsonplaceholder.typicode.com/posts');
+    try{
+        const responseData=await sendHttpRequest('GET','https://jsonplaceholder.typicode.com/pos');
         const listOfPost=responseData;
         for(const post of listOfPost){
             const postEl=document.importNode(postTemplate.content,true);
@@ -90,9 +97,9 @@ async function fetchPost(){
             postEl.querySelector('li').id=post.id;
             listElement.append(postEl);
         }
-    // }catch(err){
-    //     alert(err.message);
-    // }
+    }catch(err){
+        alert(err.message);
+    }
     
 }
 
