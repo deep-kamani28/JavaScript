@@ -88,7 +88,7 @@ function sendHttpRequest(method,url,data){
 
 async function fetchPost(){
     try{
-        const responseData=await sendHttpRequest('GET','https://jsonplaceholder.typicode.com/pos');
+        const responseData=await sendHttpRequest('GET','https://jsonplaceholder.typicode.com/posts');
         const listOfPost=responseData;
         for(const post of listOfPost){
             const postEl=document.importNode(postTemplate.content,true);
