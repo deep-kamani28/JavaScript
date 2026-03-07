@@ -1,5 +1,7 @@
 import {ProjectList} from './App/ProjectList.js'
 
+globalThis.Max_Value='MAX';
+
 class App {
   static init() {
     const activeProjectList = new ProjectList("active");
