@@ -1,4 +1,4 @@
-import {ProjectItem} from './ProjectItem.js';
+import { ProjectItem } from './ProjectItem.js';
 import { DOMHelper } from '../Utility/DOMHepler.js';
 
 export class ProjectList {
