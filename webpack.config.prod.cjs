@@ -1,10 +1,11 @@
 const path = require("path");
+const CleanPlugin=require('clean-webpack-plugin');
 
 module.exports = {
   mode: "production",
   entry: "./Practice_OOP/src/app.js",
   output: {
-    filename: "app.js",
+    filename: "[contenthash].js",
     // eslint-disable-next-line no-undef
     path: path.resolve(__dirname,"Practice_OOP", "assets", "scripts"),
   },
@@ -16,5 +17,8 @@ module.exports = {
       },
     ],
   },
-  devtool: 'cheap-source-map'
+  devtool: 'cheap-source-map',
+  plugins: [
+      new CleanPlugin.CleanWebpackPlugin()
+    ]
 };
