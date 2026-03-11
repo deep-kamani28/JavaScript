@@ -1,17 +1,32 @@
 const storeBtn=document.getElementById('store-btn');
-const retrieveBt=document.getElementById('retrieve-btn');
+const retrieveBtn=document.getElementById('retrieve-btn');
+
+const dbRequest=indexedDB.open('DummyStorage',1);
+
+dbRequest.onupgradeneeded=function(event){
+    const db=event.target.result;
+
+    const objStore=db.createObjectStore('products', {keyPath:'id'});
+
+    objStore.transaction.oncomplete=function(event){
+        const productStore=db.transaction('products','readwrite').objectStore('products');
+        productStore.add({
+            id:'p1',
+            title:'First Product',
+            price:10000,
+            tags:['Luxury','Expensive']
+        });
+    };
+};
+
+dbRequest.onerror=function(event){
+    console.log('Error!');
+};
 
 storeBtn.addEventListener('click',()=>{
-    const userId='123';
-    const user={name:'A', age:20};
-    document.cookie=`uid=${userId} max-age=60`;
-    document.cookie=`user=${JSON.stringify(user)}`;
+    
 });
 
-retrieveBt.addEventListener('click',()=>{
-    const cookieData=document.cookie.split(';');
-    const data=cookieData.map(i=>{
-        return i.trim();
-    });
-    console.log(data);
+retrieveBtn.addEventListener('click',()=>{
+    
 });
