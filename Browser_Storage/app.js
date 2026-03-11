@@ -3,8 +3,14 @@ const retrieveBtn=document.getElementById('retrieve-btn');
 
 const dbRequest=indexedDB.open('DummyStorage',1);
 
+let db;
+
+dbRequest.onsuccess=function(event){
+    db=event.target.result;
+};
+
 dbRequest.onupgradeneeded=function(event){
-    const db=event.target.result;
+    db=event.target.result;
 
     const objStore=db.createObjectStore('products', {keyPath:'id'});
 
@@ -24,9 +30,19 @@ dbRequest.onerror=function(event){
 };
 
 storeBtn.addEventListener('click',()=>{
-    
+    const productStore=db.transaction('products','readwrite').objectStore('products');
+    productStore.add({
+        id:'p2',
+        title:'Second Product',
+        price:100000,
+        tags:['Luxury','Expensive']
+    });
 });
 
 retrieveBtn.addEventListener('click',()=>{
-    
+    const productStore=db.transaction('products','readwrite').objectStore('products');
+    const retrieve=productStore.get('p2');
+    retrieve.onsuccess=function(){
+        console.log(retrieve.result);
+    };
 });
