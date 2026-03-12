@@ -12,10 +12,23 @@ module.exports = {
   module: {
     rules: [
       {
-        test: /\.js$/,
-        type: "javascript/auto",
-      },
-    ],
+        test: /\.(?:js|mjs|cjs)$/,
+        exclude: /node_modules/,
+        use: {
+          loader: 'babel-loader',
+          options: {
+            targets: "defaults",
+            presets: [
+              [
+                '@babel/preset-env', 
+                {useBuiltIns:'usage', corejs:{version:3}}
+                
+              ]
+            ]
+          }
+        }
+      }
+    ]
   },
   devtool: 'cheap-source-map',
   plugins: [

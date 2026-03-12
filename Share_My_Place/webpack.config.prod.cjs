@@ -1,14 +1,18 @@
 const path = require("path");
 const CleanPlugin=require('clean-webpack-plugin');
-const { version } = require("os");
 
 module.exports = {
-  mode: "development",
-  entry: "./src/app.js",
-  output: {
-    filename: "app.js",
-    path: path.resolve(__dirname, "assets", "scripts"),
+  mode: "production",
+  entry: {
+    'SharePlace':'./src/SharePlace.js',
+    'MyPlace':'./src/MyPlace.js'
   },
+
+  output: {
+      filename: '[name].[contenthash].js',
+      path: path.resolve(__dirname, 'dist','assets','scripts'),
+      publicPath: 'assets/scripts/'
+    },
 
   module: {
     rules: [
@@ -31,14 +35,10 @@ module.exports = {
       }
     ]
   },
-  devtool: 'eval-cheap-module-source-map',
-  devServer: {
-    static: {
-      directory: path.join(__dirname),
-    },
-    open: true,
-  },
+
+  devtool: 'cheap-source-map',
+  
   plugins: [
-    new CleanPlugin.CleanWebpackPlugin()
-  ]
+      new CleanPlugin.CleanWebpackPlugin()
+    ]
 };
