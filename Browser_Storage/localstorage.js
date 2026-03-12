@@ -11,7 +11,7 @@ const user={
 
 storeBtn.addEventListener('click',()=>{
     sessionStorage.setItem('uid',userId);   // when we close the tab session storage gets clear.
-    localStorage.setItem('user',JSON.stringify(user));  // local storage does not get clear untill we clear it manuall or browser clear it due to full storage.
+    localStorage.setItem('user',JSON.stringify(user));  // local storage does not get clear until we clear it manually or browser clear it due to full storage.
 });
 
 retrieveBt.addEventListener('click',()=>{
