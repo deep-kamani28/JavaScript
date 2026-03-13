@@ -39,6 +39,6 @@ module.exports = {
   devtool: 'cheap-source-map',
   
   plugins: [
-      new CleanPlugin.CleanWebpackPlugin()
+      new CleanPlugin.CleanWebpackPlugin(),
     ]
 };

@@ -3,15 +3,15 @@
   "version": "1.0.0",
   "description": "",
   "license": "ISC",
-  "browserslist":">0.5%",
+  "browserslist": ">0.5%",
   "author": "",
-  "type": "commonjs",
+  "type": "module",
   "main": "index.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
-    "build":"webpack",
-    "build-dev":"webpack-dev-server",
-    "build-prod":"webpack --config webpack.config.prod.cjs"
+    "build": "webpack",
+    "build-dev": "webpack-dev-server",
+    "build-prod": "webpack --config webpack.config.prod.cjs"
   },
   "devDependencies": {
     "@babel/core": "^7.29.0",

@@ -1,33 +1,87 @@
+// const path = require("path");
+// const CleanPlugin=require('clean-webpack-plugin');
+
+// module.exports = {
+//   mode: "development",
+//   entry: {
+//     'SharePlace':'./src/SharePlace.js',
+//     'MyPlace':'./src/MyPlace.js'
+//   },
+
+//   output: {
+//     filename: "[name].js",
+//     path: path.resolve(__dirname, "dist", "assets", "scripts"),
+//     publicPath: "/"
+//   },
+  
+//   module: {
+//     rules: [
+//       {
+//         test: /\.(?:js|mjs|cjs)$/,
+//         exclude: /node_modules/,
+//         use: {
+//           loader: 'babel-loader',
+//           options: {
+//             targets: "defaults",
+//             presets: [
+//               [
+//                 '@babel/preset-env', 
+//                 {useBuiltIns:'usage', corejs: 3}
+                
+//               ]
+//             ]
+//           }
+//         }
+//       }
+//     ]
+//   },
+
+//   devtool: 'eval-cheap-module-source-map',
+
+//   devServer: {
+//     static: {
+//       directory: path.join(__dirname,"dist"),
+//       // serveIndex:false
+//     },
+//     open: true,
+//   },
+  
+//   plugins: [
+//     new CleanPlugin.CleanWebpackPlugin()
+//   ]
+// };
+
 const path = require("path");
-const CleanPlugin=require('clean-webpack-plugin');
+const CleanPlugin = require("clean-webpack-plugin");
 
 module.exports = {
   mode: "development",
   entry: {
-    'SharePlace':'./src/SharePlace.js',
-    'MyPlace':'./src/MyPlace.js'
+    SharePlace: "./src/SharePlace.js",
+    MyPlace: "./src/MyPlace.js"
   },
 
   output: {
-    filename: "assets/scripts/[name].js",
+    filename: "[name].js",
     path: path.resolve(__dirname, "dist", "assets", "scripts"),
-    publicPath: 'dist/assets/scripts/'
+    publicPath: "/assets/scripts/"
   },
-  
+
   module: {
     rules: [
       {
-        test: /\.(?:js|mjs|cjs)$/,
+        test: /\.js$/,
         exclude: /node_modules/,
         use: {
-          loader: 'babel-loader',
+          loader: "babel-loader",
           options: {
-            targets: "defaults",
             presets: [
               [
-                '@babel/preset-env', 
-                {useBuiltIns:'usage', corejs:{version:3}}
-                
+                "@babel/preset-env",
+                {
+                  useBuiltIns: "usage",
+                  corejs: 3
+                }
               ]
             ]
           }
@@ -36,17 +90,14 @@ module.exports = {
     ]
   },
 
-  devtool: 'eval-cheap-module-source-map',
+  devtool: "eval-cheap-module-source-map",
 
   devServer: {
     static: {
-      directory: path.join(__dirname,'dist'),
-      serveIndex:false
+      directory: path.join(__dirname, "dist")
     },
-    open: true,
+    open: true
   },
-  
-  plugins: [
-    new CleanPlugin.CleanWebpackPlugin()
-  ]
+
+  plugins: [new CleanPlugin.CleanWebpackPlugin()]
 };
