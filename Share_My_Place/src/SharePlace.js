@@ -6,9 +6,25 @@ class PlaceFinder{
     constructor(){
         const addressForm=document.querySelector('form');
         const locateUsreBtn=document.getElementById('locate-btn');
+        this.shareBtn=document.getElementById('share-btn');
         
         locateUsreBtn.addEventListener('click', this.locateUserHandler.bind(this));
+        this.shareBtn.addEventListener('click',this.sharePlaceHandler);
         addressForm.addEventListener('submit', this.findAddressHandler.bind(this));
+    }
+
+    sharePlaceHandler(){
+        const shareLinkInputEl=document.getElementById('share-link');
+        shareLinkInputEl.select();
+        if(!navigator.clipboard){
+            alert('Your browser does not support this feature.');
+        }
+        navigator.clipboard.writeText(shareLinkInputEl).then(()=>{
+            alert('Copied to clipboard!');
+        }).catch(err=>{
+            console.log(err);
+        });
+
     }
 
     selectPlace(coordinates,address){
@@ -17,11 +33,12 @@ class PlaceFinder{
         }else{
             this.map=new Map(coordinates);
         }
-        
-        
+        this.shareBtn.disabled=false;
+        const shareLinkInputEl=document.getElementById('share-link');
+        shareLinkInputEl.value=`${location.origin}/my-place?address=${encodeURI(address)}&lat=${coordinates.lat}&lng=${coordinates.lng}`;
     }
 
-    async locateUserHandler(){
+    locateUserHandler(){
         if(!navigator.geolocation){
             alert('Location feature is not available in your browser.');
             return;
